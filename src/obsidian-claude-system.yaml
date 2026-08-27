@@ -1,0 +1,334 @@
+template: explainer
+title: How my Obsidian + Claude system works
+kicker: From Isabella · the whole machine
+subtitle: |
+  You asked four things: how I keep a *library of working prompts* without drowning in versions, how to build *personas with skills* that stay maintainable, how to get Claude to *remember across separate chats*, and how everything *connects up over your whole life*. One idea solves all four. Here it is, end to end.
+audience: Written for Mouad · after our WhatsApp chat, 30 July
+output: ~/Desktop/vault-explainer-for-mouad.html
+
+sections:
+  - type: bigidea
+    headline: |
+      Stop keeping your system inside chats. Put everything (prompts, personas, knowledge, memory) into **one folder of plain markdown files**, and run Claude *inside that folder*.
+    body: |
+      That's all Obsidian is: a nice editor over a folder of text files on your own machine. Claude Code runs in that folder with permission to read and write the files. The chats become disposable; the files are the system. Every one of your four frustrations is a symptom of keeping the system in chats, and every one disappears when the system lives in files instead.
+
+  - type: flow
+    eyebrow: The architecture at a glance
+    title: Information enters at one end, becomes files in the middle, and comes back out smarter
+    foot: |
+      A sixth layer, *Govern*, sits over all five: a validation hook checks every file write against the metadata schema, and a periodic sweep catches drift. And notice what's absent: none of this depends on memory features from Anthropic. It works today.
+    stages:
+      - num: 1
+        icon: 📥
+        name: Input
+        cap: pipelines capture everything as files
+      - num: 2
+        icon: 🗂️
+        name: Store
+        cap: flat files + metadata
+        turning: true
+      - num: 3
+        icon: 🔗
+        name: Surface
+        cap: live queries assemble the views
+      - num: 4
+        icon: 🧠
+        name: Think
+        cap: skills + consultants work on the store
+      - num: 5
+        icon: 📤
+        name: Output
+        cap: briefings, documents, sites
+
+  - type: stages
+    eyebrow: The layer framework
+    title: Six layers, and every piece of the machine lives in exactly one
+    cards:
+      - tag: Layer 1 · Input & Process
+        num: "01"
+        title: Everything that captures, transcribes, and files
+        lede: |
+          The pipelines that get the world into the vault with as little friction as possible. The rule they all share: **capture makes zero filing decisions in the moment.** Deciding where something "belongs" is the chore that kills every note system; here the pipelines decide, later, automatically.
+        mechs:
+          - h: In my vault
+            body: |
+              Voice notes get transcribed locally and routed by type (journal, ideas, meetings, lectures each have their own lane). A phone shortcut appends any URL I share to an inbox file, and a scheduled sweep fetches, summarises and files it. Emails involving people I track get logged automatically. Everything lands as a tagged markdown file without me touching it.
+          - h: Your minimal version
+            body: |
+              One inbox note. Paste links and thoughts into it during the day; run one skill in the evening that files everything with metadata. Add automation only where the volume justifies it.
+        plain: |
+          The input layer exists so that getting things in costs nothing. Cheap capture is what makes the rest of the system worth building.
+
+      - tag: Layer 2 · Store
+        num: "02"
+        turning: true
+        title: The vault itself, where everything is a file
+        lede: |
+          The heart of the machine, and deliberately the most boring part: flat folders of markdown files with one metadata schema. **Folders are physical storage; metadata is the organisation.** A note's frontmatter says what it is, who it involves, and which areas of my life it touches, and that's what every other layer runs on.
+        mechs:
+          - h: In my vault
+            body: |
+              Near-flat storage (notes by kind, not by topic), one ratified schema for every field and allowed value, and self-describing filenames. Prompts, personas, journal entries, meeting notes and course material all live here as the same kind of object: a text file with structured metadata on top.
+          - h: Why this layer is the answer to your memory question
+            body: |
+              Because everything is in one store, every chat opens onto the same state. Cross-chat memory isn't a feature to wait for; it's a property of keeping the system in files.
+        plain: |
+          Get this layer right and the others become easy. It's also the only layer you can't skip.
+
+      - tag: Layer 3 · Surface
+        num: "03"
+        title: Live queries that assemble the views
+        lede: |
+          Nothing in the vault is hand-cross-referenced. Views are **saved queries over the metadata**, computed fresh every time: the Related block on each note, the person pages that collect everything involving someone, the dashboards and maps. Edit a note's metadata and every view that should show it just does.
+        mechs:
+          - h: In my vault
+            body: |
+              Every content note ends with a Related block ranking its neighbours by shared people, entities, tags and areas. Every person page carries a query pulling all notes stamped with that person. Overview pages for people and companies render straight from frontmatter; nothing on them is maintained by hand.
+          - h: Your minimal version
+            body: |
+              Obsidian's built-in search plus one saved query per thing you care about. The habit that matters is stamping metadata at creation, because every view is downstream of that.
+        plain: |
+          Connection stops being work you do and becomes a property the store just has. This layer is why nothing rots.
+
+      - tag: Layer 4 · Think
+        num: "04"
+        title: Skills and consultants, the working layer
+        lede: |
+          Everything that *acts on* the store: the ~50 skills (standard prompts as files), the 5 consultants (personas as corpus + behaviour file), and an identity layer, files stating my goals and priorities that Claude reads and challenges me against. This is where your prompt library and your personas both live, as files like everything else.
+        mechs:
+          - h: In my vault
+            body: |
+              Skills for every repeated workflow: processing transcripts, triaging tasks, filing content, quality-passing my writing, rendering documents. Consultants for judgement: negotiation, rationality, leadership, organisational behaviour, AI-building. All of them read and write the same store.
+          - h: Your minimal version
+            body: |
+              Three skills extracted from your most-reused prompts, then one consultant around the corpus you care most about. This layer is where you are already trying to start; the reason to build the store first is that this layer is only as good as what it can read.
+        plain: |
+          Prompts and personas aren't a separate system you maintain on the side. They're residents of the same vault, which is why they never drift out of date.
+
+      - tag: Layer 5 · Output
+        num: "05"
+        title: What leaves the vault, polished
+        lede: |
+          The layer that faces other people: a daily briefing compiled from the vault each morning, rendered documents in a house style, slide decks, published web pages. Output is generated from the store on demand, never stored as the master copy; the markdown stays canonical and the polished artefact is a view of it.
+        mechs:
+          - h: In my vault
+            body: |
+              A rendering skill turns a YAML description into a finished designed document, deterministically. **The document you are reading came out of that skill.** Same machinery does decks and simple websites.
+          - h: Your minimal version
+            body: |
+              Skip it at first. Output layers are the fun part and therefore the trap; they matter only once the store underneath is worth showing.
+        plain: |
+          When the knowledge lives in files, "make this shareable" becomes a rendering step rather than a rewrite.
+
+      - tag: Layer 6 · Govern
+        num: "06"
+        title: The layer that keeps the other five honest
+        lede: |
+          Systems like this usually decay: tags drift, conventions erode, pipelines silently break. So governance is its own layer. **Rules are enforced by machinery, not memory.**
+        mechs:
+          - h: In my vault
+            body: |
+              A validation hook checks every file write against the metadata schema at write time, so bad metadata never lands. A periodic sweep lints the whole vault against a logged baseline and catches drift. Pipeline errors surface to a control panel instead of failing silently, and everything is backed up.
+          - h: Your minimal version
+            body: |
+              A one-page schema note stating your allowed types and tags, and a monthly session where Claude audits the vault against it. Automate the checks when breaking them starts to cost you.
+        plain: |
+          The difference between a system that lasts six weeks and one that lasts years is not discipline. It's whether the rules check themselves.
+
+  - type: stages
+    eyebrow: Your four problems, mapped onto the layers
+    title: Each frustration, and the file-based answer
+    cards:
+      - tag: 'Problem 1 · "Lost between prompt versions"'
+        num: "01"
+        turning: true
+        title: A prompt library that has exactly one copy of every prompt
+        lede: |
+          This was your first question and it's the core of the whole thing. In my vault, every standard prompt I use is a **skill**: one markdown file, with a name, sitting in one folder. I have about fifty of them. When I want one, I type `/meeting-notes` or `/process` or `/triage` in Claude Code and it reads the file and follows it. There are no versions floating around in chats, because the chat never holds the master copy. The file is the master copy. On the layer map, skills are half of **Think**.
+        mechs:
+          - h: What a skill file actually is
+            body: |
+              A plain markdown file called `SKILL.md` in a folder named after the skill. It has a two-line header (name + one-line description of when to use it) and then the instructions, written once, as carefully as you like. Example: my `/meeting-notes` skill holds the entire procedure for turning a raw call transcript into a structured note.
+          - h: How invoking works
+            body: |
+              Claude Code picks up any skill in the `.claude/skills/` folder automatically. Typing `/name` loads that file into the conversation and Claude executes it. Same prompt, every time, from every chat.
+          - h: How versioning stops hurting
+            body: |
+              When a skill underperforms, I edit the file. That's the release. Every future invocation, in every future chat, uses the new version instantly. If you want history, the folder can be a git repo and you get full version control for free.
+          - h: The habit that builds the library
+            full_width: true
+            body: |
+              Any time I catch myself writing the same instructions twice in chat, that's the signal: it becomes a skill. The library grew to fifty files one repetition at a time; I never sat down to "design a prompt library".
+        plain: |
+          Your prompt library is a folder of named text files, and the chat always reads from the file. One canonical copy, edited in place. The version chaos you're feeling is what happens when the master copy lives in scroll-back.
+
+      - tag: 'Problem 2 · "Personas getting too big"'
+        num: "02"
+        title: Personas that stay small because the knowledge lives outside the prompt
+        lede: |
+          This is the consultant system I mentioned. Your instinct (personas with specific expertise) is right; the mistake that makes it unmaintainable is stuffing the expertise *into the prompt*. A consultant in my vault is two things: a **short instruction file** (a page or so: who it is, how to answer, what to refuse) and a **corpus folder** of source material it reads at answer time. The persona never grows, because new knowledge means dropping a file into the corpus folder, not editing the prompt. Consultants are the other half of **Think**.
+        mechs:
+          - h: The anatomy
+            body: |
+              The instruction file lives in `.claude/agents/` and defines behaviour: "you are grounded in these readings, cite them verbatim, never paraphrase the author in his own voice, here is where the corpus lives on disk." The corpus is just a folder of markdown files inside the vault: lecture transcripts, articles, book chapters.
+          - h: My current five
+            body: |
+              A negotiations coach (built on my INSEAD negotiation lectures and readings), a rationality consultant (the LessWrong Sequences), a leadership thinker (a professor's collected essays), an organisational-behaviour one (two courses' worth of material), and an AI-building advisor (Anthropic docs plus a few practitioner sources, with an explicit authority ranking between them).
+          - h: Why it never bloats
+            body: |
+              The instruction file is behaviour only, so it stays a page long forever. The corpus can grow to hundreds of files with zero maintenance cost, because the consultant searches it at answer time rather than carrying it around.
+          - h: One rule that keeps them honest
+            body: |
+              Every consultant must cite its corpus verbatim, with the source file named. If the answer isn't in the corpus, it says so. This is what makes them feel like real advisors rather than a costume on top of generic Claude.
+        plain: |
+          A persona is a pointer to a library plus rules of engagement, not a giant prompt. Keep the instruction file to one page and put all the knowledge in a folder it can search. That's the "simpler, more maintainable way" you're looking for.
+
+      - tag: 'Problem 3 · "Can''t reference other chats"'
+        num: "03"
+        title: Cross-chat memory, available today, because the files are the memory
+        lede: |
+          You're waiting for Anthropic to solve this. You don't need to wait. The reason my chats can reference each other is that **no important information is allowed to live only in a chat**. Every conversation reads its context from files and writes its results back to files. The next conversation, tomorrow or in six months, opens onto the same folder and picks up exactly where the last one ended. This is the **Store** layer doing its job.
+        mechs:
+          - h: The standing brief
+            body: |
+              A file called `CLAUDE.md` sits at the root of the vault and is loaded automatically at the start of every session. Mine describes the whole system: what lives where, the rules, the conventions. Every fresh chat starts already knowing how my world works.
+          - h: Outputs land as files
+            body: |
+              When a chat produces something worth keeping (a decision, a plan, a piece of research, meeting notes), it's written into the vault as a note before the chat closes. The chat scroll is allowed to die; the artefact survives.
+          - h: Persistent memory on top
+            body: |
+              Claude Code also keeps a small memory folder of its own: things it has learned about how I like to work, corrections I've given it, ongoing project state. Written as it learns them, loaded in future sessions. Chats end; the lessons don't.
+        plain: |
+          Don't ask "how do I make chats talk to each other". Ask "how do I make sure nothing important exists only in a chat". Once every conversation reads from and writes to the same folder, cross-chat memory is just... the folder.
+
+      - tag: 'Problem 4 · "Connect up your whole life"'
+        num: "04"
+        title: The autonomous tagging system, and why I never file anything by hand
+        lede: |
+          This is the "v v v lovely tagging system" from my message. Every note in the vault carries a small metadata block at the top: what type of thing it is, topic tags, which **people** and **companies** it involves, which areas of my life it touches. The point is that *I* almost never write this block. The pipelines that create notes stamp the metadata at creation time, automatically, from a fixed vocabulary. Filing is a side effect, not a chore. This is **Store** and **Surface** working together.
+        mechs:
+          - h: Metadata over folders
+            body: |
+              Folders force a note to live in one place; a call with a founder about AI touches my network, my startup thinking, and my AI interest all at once. So storage is nearly flat and the metadata does the organising. A note belongs to everything its tags say it belongs to.
+          - h: Stamped, not curated
+            body: |
+              When my meeting-notes skill processes a transcript, it writes the people, tags and areas itself. When an article comes in through my reading pipeline, same thing. A validation hook checks every write against the schema, so the vocabulary can't quietly rot into fifty near-duplicate tags.
+          - h: People pages assemble themselves
+            body: |
+              Every person in my network has a page, and each page carries a live query: "show every note in the vault stamped with this person". Meetings, emails, tasks, mentions all surface there automatically. I never update a CRM; I just stamp names at creation, and the query does the rest, forever.
+        plain: |
+          Tag once, at the moment a note is created, by machine, from a controlled list. Then let saved queries assemble the views: per person, per project, per topic. Connection stops being work you do and becomes a property the vault just has.
+
+  - type: pillars
+    eyebrow: The distinction that keeps it simple
+    title: Two kinds of reusable prompt, and they are not the same thing
+    pillars:
+      - icon: ⚡
+        title: A skill is a procedure
+        lead: |
+          Use a skill when the value is in *how to do* something: a repeatable process you want executed the same way every time.
+        bullets:
+          - "**Defined by steps.** Process this transcript, triage this inbox, mark this problem set, render this document."
+          - "**One file, invoked by name** with a slash command. No knowledge base attached."
+          - "**Grows by addition:** a new repeated task becomes a new skill file. Existing skills don't get longer."
+          - "This is what your 'set of prompts for different types of analysis' should become: one file per analysis type, not one mega-document."
+      - icon: 🎓
+        title: A consultant is a perspective
+        lead: |
+          Use a consultant when the value is in *what it knows*: a body of source material applied to your question through a specific lens.
+        bullets:
+          - "**Defined by a corpus** plus a short behaviour file. The negotiation coach is its readings; the instruction file just says how to use them."
+          - "**Answers questions, cites sources.** It's for judgement calls, not procedures."
+          - "**Grows by feeding the corpus.** Add a new article to the folder and the persona is instantly smarter, with zero prompt editing."
+          - "Your personas-with-skills plan collapses cleanly into this split: the 'skills' under each persona are usually just skills, shared across personas, and the persona itself is a corpus + a page."
+
+  - type: scoring
+    eyebrow: The connective tissue
+    title: The live query that ranks "related" on every note
+    lead: |
+      Every content note in my vault ends with a Related block. It isn't a hand-typed list of links; it's a saved query that scores every other note against this one and shows the top 15. The scoring is deliberately simple:
+    rows:
+      - pts: "+3"
+        title: Shared person
+        body: The same person is stamped on both notes. The strongest signal two notes belong together.
+      - pts: "+2"
+        title: Each shared entity or tag
+        body: Companies, books, projects, keyword tags. Two points per match.
+      - pts: "+1"
+        title: Each shared area of life
+        body: The broad axes (career, AI, courses, and so on). One point each.
+    note: |
+      I tune nothing and maintain nothing. Tag well once, and every note is permanently wired to its neighbours; the map redraws itself each time something new arrives.
+
+  - type: vaultfit
+    eyebrow: The payoff, concretely
+    title: Where one 45-minute call actually ends up
+    intro: |
+      Here's what the layers do with a single real input, top to bottom. Say I record a call with a founder I might work with. One skill run later, this is where it lives:
+    source:
+      label: The input
+      name: '"Call with a founder · 45 minutes"'
+      meta: one voice recording, zero manual filing
+    fan:
+      - icon: 📝
+        where: Meeting notes
+        what: "**A structured note**: key points as implications, real quotes, open questions. People and topics stamped in the metadata."
+      - icon: 🗣
+        where: Raw captures
+        what: "**The verbatim transcript**, kept separately and tagged, so the source is always checkable."
+      - icon: 👤
+        where: People
+        what: "**The founder's page** now surfaces this meeting automatically, next to every email and past mention of them."
+      - icon: ✅
+        where: To-do system
+        what: "**The action items**, extracted into my task system as their own items, linked back to the person and the note."
+    divider: "↓  then the Related query draws every link, automatically  ↓"
+    fan2:
+      - icon: 🔗
+        color: green
+        where: via shared people
+        what: "The note surfaces next to **every other conversation involving the same person**, forever."
+      - icon: 🏷️
+        color: green
+        where: via shared tags
+        what: "It joins the cluster of notes on the same companies, ideas and projects."
+      - icon: 🧲
+        color: green
+        where: via shared areas
+        what: "It appears on the landing pages for the areas of my life it touches."
+    foot: |
+      One recording, one skill run, five destinations, and a query that keeps it stitched into everything related. That's what "get Claude to view all your stuff over your whole life and connect it up" cashes out to in practice.
+
+  - type: pillars
+    eyebrow: If you start this week
+    title: The order that works, and the traps to skip
+    pillars:
+      - icon: 🚀
+        title: Build in this order
+        lead: |
+          Each step is useful on its own, so you never build infrastructure on faith.
+        bullets:
+          - "**1. Make the vault.** Install Obsidian, create one vault, move your existing notes and documents in as markdown. Flat is fine."
+          - "**2. Run Claude Code inside it.** Open a terminal in the vault folder. From that moment Claude can read and search everything you've ever put there."
+          - "**3. Write `CLAUDE.md`.** One page: who you are, what's in the folder, your conventions. This alone fixes most of the cross-chat pain."
+          - "**4. Extract your first three skills** from the prompts you already reuse most. Feel the version chaos end."
+          - "**5. Build one consultant** around the corpus you care most about. Then judge whether you want four more."
+      - icon: ⚠️
+        title: Traps I'd skip
+        lead: |
+          Each of these is a mistake I either made or watched myself nearly make.
+        bullets:
+          - "**Don't design the taxonomy up front.** Start with a handful of tags and a fixed list; let the vocabulary earn its entries. A 60-tag scheme designed on day one rots by day thirty."
+          - "**Don't put knowledge in prompts.** The moment a persona file exceeds a page or two, the expertise belongs in a corpus folder instead."
+          - "**Don't organise with deep folder trees.** Metadata scales; nesting doesn't. You will always regret the fourth level."
+          - "**Don't let important output die in chats.** End sessions by writing the result into the vault. The habit matters more than any tool."
+
+  - type: oneline
+    text: |
+      Prompts, personas, memory and connections are all the same thing: *plain text files in one folder that Claude can read and write*. Get the information out of your chats and into files, and every problem you listed dissolves.
+    foot: And yes, let's ring and I'll show you it running. It's much less impressive live, which is rather the point.
+
+footer:
+  meta: grounded in the live system · ~50 skills · 5 consultants · one vault, one metadata schema, live queries
+  tail: Isabella · July 2026

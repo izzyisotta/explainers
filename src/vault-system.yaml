@@ -1,0 +1,162 @@
+template: explainer
+title: How my whole system works
+kicker: Obsidian, Claude Code and one folder of text files
+subtitle: |
+  The Canvas pipeline you have already seen is one small piece. This is the shape of the whole thing - how everything I read, record, write and do ends up as files in one folder, and how Claude works inside that folder rather than in chats.
+audience: For Noa · the high-level version
+
+sections:
+  - type: bigidea
+    headline: |
+      Nothing important lives in a chat. Everything is a **plain text file in one folder**, and Claude runs **inside that folder** with permission to read and write.
+    body: |
+      Obsidian is just a nice editor over a folder of markdown files on my Mac. Claude Code is a terminal that runs in the same folder. The chats are disposable, and the files are the system. Prompts, notes, people, tasks, my own goals - all the same kind of object, a text file with a small metadata block on top.
+
+  - type: flow
+    eyebrow: Five layers
+    title: Things come in at one end and come back out smarter
+    foot: A sixth layer sits over all of them - rules that check themselves, so the system does not rot.
+    stages:
+      - num: 1
+        icon: 📥
+        name: Input
+        cap: pipelines capture everything
+      - num: 2
+        icon: 🗂️
+        name: Store
+        cap: flat files, one metadata schema
+        turning: true
+      - num: 3
+        icon: 🔗
+        name: Surface
+        cap: live queries build the views
+      - num: 4
+        icon: 🧠
+        name: Think
+        cap: skills, consultants, my goals
+      - num: 5
+        icon: 📤
+        name: Output
+        cap: briefings, documents, sites
+
+  - type: stages
+    cards:
+      - tag: Layer 1 · Input
+        num: "01"
+        title: Getting things in costs nothing
+        lede: |
+          Every pipeline shares one rule - **capture makes no filing decisions in the moment**. Deciding where something belongs is the chore that kills note systems, so here the machinery decides later, on its own.
+        mechs:
+          - h: What comes in
+            body: |
+              Voice notes from my phone or watch (journal, ideas, tasks, meetings and lectures each have their own lane, sorted by what I said or when I said it). Any link I share from my phone goes to an inbox file that a scheduled sweep fetches, summarises and files. Canvas slides and assignments arrive every morning. Emails with people I track get logged against them.
+          - h: What I actually do
+            body: |
+              Press record, share a link, or type a line into a to-do. Everything else lands as a tagged file without me touching it.
+        plain: |
+          If capture is free, you capture everything, and that is what makes the rest worth building.
+
+      - tag: Layer 2 · Store
+        num: "02"
+        turning: true
+        title: Flat folders, and metadata does the organising
+        lede: |
+          The heart of it, and deliberately the most boring part. Folders are physical storage only - notes by kind (my writing, other people's content, meetings, people, companies), never by topic. **What a note is about lives in its metadata**, so one note can belong to my network, a startup idea and an INSEAD course at once.
+        mechs:
+          - h: One schema
+            body: |
+              Every file starts with a small block saying what type it is, which people and companies it involves, and which areas of my life it touches - from a fixed vocabulary, stamped by the pipeline that created it. A hook checks every write against the schema, so the vocabulary cannot drift.
+          - h: Why this is the memory
+            body: |
+              Because everything is in one folder, every new chat opens onto the same state. A one-page file at the root tells Claude how my world works, and it loads at the start of every session. Cross-chat memory is not a feature I am waiting for, it is what you get from keeping the system in files.
+        plain: |
+          Get this layer right and the others get easy. It is also the only one you cannot skip.
+
+      - tag: Layer 3 · Surface
+        num: "03"
+        title: Nothing is cross-referenced by hand
+        lede: |
+          Every view is a **saved query over the metadata**, computed fresh each time. Change a note's tags and every page that should show it just does.
+        mechs:
+          - h: People pages
+            body: |
+              Everyone in my network has a page carrying one query, show me every note stamped with this person. Meetings, emails, tasks, mentions all appear there on their own. I never update a CRM. I stamp names at creation and the query does the rest.
+          - h: Related notes
+            body: |
+              Every note ends with a block ranking its neighbours by shared people, tags and areas. A conversation from six months ago resurfaces exactly when I open something related to it.
+        plain: |
+          Connection stops being work I do and becomes something the folder just has.
+
+      - tag: Layer 4 · Think
+        num: "04"
+        title: Skills, consultants and a file that says what I am trying to do
+        lede: |
+          Everything that acts on the store. About **fifty skills**, each a named text file holding a procedure that runs when I type its name or on a schedule - process this transcript, triage my tasks, write this in my voice. **Six consultants**, each a one-page behaviour file plus a folder of source material it must cite verbatim - a negotiation coach built on my INSEAD course, a rationality one on the LessWrong Sequences, Paul Graham's essays for startup decisions, and so on.
+        mechs:
+          - h: The identity layer
+            body: |
+              Seven short files in my own words - who I am, what I am aiming at, my beliefs, my current bets, what I have learnt. Claude reads them at the start of every session and is under instruction to challenge me against them rather than agree with me. They change only when I say so.
+          - h: The butler
+            body: |
+              A background job runs every half hour, reads new tasks, does the ones that only need vault work and closes them with a note saying so, preps the ones that need me (drafts the email, gathers the research) and leaves anything ambiguous alone. Each morning I get one briefing of what it did and what needs me.
+        plain: |
+          Prompts and personas are not a side system I maintain. They are residents of the same folder, which is why they never go stale.
+
+      - tag: Layer 5 · Output
+        num: "05"
+        title: What leaves the folder, polished
+        lede: |
+          A daily briefing compiled each morning. Documents rendered into a house style from a short description - **this page came out of that**, as did the Canvas one. Slide decks, small websites, a phone app for tomorrow's readings. The markdown stays the master copy and the polished thing is a view of it.
+        mechs:
+          - h: Writing in my voice
+            body: |
+              Anything written to be read by someone else runs through a skill built from my own unassisted writing, with a mechanical check for the tells that make text read as machine-written. It is a floor, not a pass mark, and I still edit.
+          - h: The rules layer
+            body: |
+              Every file write is validated, a periodic sweep catches drift, pipeline failures land on one control page instead of failing quietly, and the folder is backed up to git every fifteen minutes. The difference between a system that lasts six weeks and one that lasts years is whether the rules check themselves.
+        plain: |
+          When the knowledge lives in files, "make this shareable" is a rendering step, not a rewrite.
+
+  - type: vaultfit
+    eyebrow: The payoff, concretely
+    title: Where one recorded conversation ends up
+    intro: |
+      Say I record a 45-minute call with a founder. One skill run later, with no filing by me:
+    source:
+      label: The input
+      name: '"Call with a founder · 45 minutes"'
+      meta: one voice recording
+    fan:
+      - icon: 📝
+        where: Meeting note
+        what: "**A structured note** - key points as implications, real quotes, open questions - with the people and topics stamped on it."
+      - icon: 🗣
+        where: Raw capture
+        what: "**The verbatim transcript**, kept separately so the source is always checkable."
+      - icon: 👤
+        where: Their page
+        what: "**The founder's page** now shows this call next to every email and past mention of them."
+      - icon: ✅
+        where: To-do system
+        what: "**The action items**, extracted as tasks, linked back to the person and the note."
+    divider: "↓  then the queries draw every link, on their own  ↓"
+    fan2:
+      - icon: 🔗
+        color: green
+        where: via shared people
+        what: "It surfaces next to every other conversation involving the same person, forever."
+      - icon: 🏷️
+        color: green
+        where: via shared tags
+        what: "It joins the cluster of notes on the same companies, ideas and projects."
+    foot: |
+      One recording, one skill run, four destinations, and a query that keeps it stitched to everything related.
+
+  - type: oneline
+    text: |
+      Prompts, memory, people, tasks and notes are all the same thing - *text files in one folder that Claude can read and write*. Get the information out of chats and into files, and most of the hard problems dissolve.
+    foot: It is much less impressive live, which is rather the point. Happy to show you.
+
+footer:
+  meta: one vault · one metadata schema · ~50 skills · 6 consultants · live queries
+  tail: For Noa, August 2026.

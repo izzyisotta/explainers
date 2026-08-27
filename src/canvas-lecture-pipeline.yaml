@@ -1,0 +1,157 @@
+template: explainer
+title: How a class gets from Canvas and my recorder into finished notes
+kicker: The Canvas scrape and the lecture pipeline
+subtitle: |
+  You asked how the scrape works and how it stays logged in. Here is the whole thing - a script that pulls slides and assignments off Canvas every morning, a recorder that captures the class, one lecture note per session written from both, and the assignments turned into to-dos with a first draft already attached.
+audience: For Noa · INSEAD and Wharton versions
+
+sections:
+  - type: bigidea
+    headline: |
+      The downloading is **stupid and scheduled**. The thinking happens afterwards, in Claude Code, reading a plain list of what arrived.
+    body: |
+      A script logs into Canvas at 7:30am and downloads whatever is new. A recorder captures the class and the transcript lands in a folder. Neither decides anything. Claude Code then reads what came in, writes the lecture note, scores the assignment and drafts a first attempt.
+
+  - type: flow
+    eyebrow: The five stages
+    title: One morning run, one recording, one note per session
+    stages:
+      - num: 1
+        icon: 🔑
+        name: Stay logged in
+        cap: one manual login, then cookies
+      - num: 2
+        icon: ⬇️
+        name: Scrape
+        cap: 7:30am, headless
+      - num: 3
+        icon: 🎙
+        name: Record
+        cap: matched by the clock
+      - num: 4
+        icon: ✍️
+        name: Write the note
+        cap: slides and recording, one note
+        turning: true
+      - num: 5
+        icon: ✅
+        name: Tasks
+        cap: scored and drafted
+
+  - type: stages
+    cards:
+      - tag: Stage 1 · Staying logged in
+        num: "01"
+        title: The session is a browser profile, not a password
+        lede: |
+          Neither INSEAD nor Penn lets students create a Canvas API token, so the script drives a **headless Chrome** (Playwright) that keeps a browser profile on disk, the way your own Chrome remembers you between days. I log in once in a visible window and the script reuses those cookies from then on.
+        mechs:
+          - h: INSEAD
+            body: |
+              The Canvas session only lasts a day, but INSEAD's single sign-on leaves a long-lived cookie in the profile, so each morning the script loads Canvas, gets bounced to the SSO, and comes back with a fresh session and no form shown. I last typed a password on 2 August.
+          - h: Penn
+            body: |
+              Same design with one extra step. PennKey puts Duo in front of the login, and Duo remembers a browser for 30 days once you have approved it there, so my one manual login also taught Duo to trust the script's browser profile. After that, when the Canvas session dies, the script loads Canvas, gets bounced through PennKey and comes back signed in on its own if PennKey still remembers it (tested: 4 seconds, no form). If PennKey shows the password form instead, the script types my PennKey and password from a file on the Mac and Duo lets it through without a push (tested: 10 seconds). Only if both fail does it send me a notification with the login command on my clipboard, and Duo's 30 days will need one approval on my phone when it runs out.
+        plain: |
+          Log in once in a real browser, let the script keep the cookies and get its own sessions back, and make it tell you loudly if it ever cannot.
+
+      - tag: Stage 2 · The scrape
+        num: "02"
+        title: 7:30am, every day, whether or not I remember
+        lede: |
+          A scheduled job runs the script at 7:30 (or on wake). It talks to the **Canvas REST API** from inside the logged-in browser, so it gets clean JSON. One course table in my notes - course id, timezone, class times, a date-to-session map - drives everything, so adding a course is adding a row.
+        mechs:
+          - h: Lecture materials
+            body: |
+              For each course it finds the new files, works out the session number from the module name ("Session 07" becomes L07), and saves them flat in one folder with a course prefix. It remembers every file id it has already pulled, so re-running is free. HBS coursepacks and paywalled articles it cannot reach go on a blocked list for me to grab by hand.
+          - h: Assignments
+            body: |
+              Every assignment becomes a task in my to-do system with the brief, the deadline in the course's timezone, and the Canvas link. At the end it writes a manifest listing each new deck with a `processed: false` flag. That list is what the note-writer reads.
+        plain: |
+          A cron job downloads anything new, makes a to-do per assignment, and leaves a list of what arrived.
+
+      - tag: Stage 3 · The recording
+        num: "03"
+        title: Record the class, and let the clock say which class it was
+        lede: |
+          I record every class on my phone or watch with **Just Press Record**. Closing the app sends the audio to the Mac, which transcribes it with speakers separated and files the raw transcript straight into my vault with the audio attached.
+        mechs:
+          - h: Matching by time
+            body: |
+              A small script checks each recording against the course table: did it start within 20 minutes of a class slot, did it stay clear of other courses, was it no longer than the slot, is the date in the session map. If so it names the course and session.
+          - h: It refuses to guess
+            body: |
+              Any failed rule marks the recording "needs review" and stops. It never infers the course from the filename, the transcript or my calendar, because a confidently wrong session number is worse than an empty one. Recordings that are not lectures become meeting notes instead.
+        plain: |
+          Press record, close the app. The Mac works out which class it was from when it started and how long it ran.
+
+      - tag: Stage 4 · The note
+        num: "04"
+        turning: true
+        title: One note per session, from whichever half arrives first
+        lede: |
+          Each morning when I run my triage routine in Claude Code, a skill reads the manifest and the recordings and, for each session, creates or enriches one note named `[COURSE] L07 - Title`, title taken from the first slide. Slides and recording arrive on different days; whichever lands first creates the note and the second enriches it in place.
+        mechs:
+          - h: What is in it
+            body: |
+              Key concepts, each linked with a one-line definition. A short summary. Then detailed notes written to be exam-ready without opening the deck again - worked examples with the calculation, frameworks explained, equations in LaTeX, diagrams described. A section left empty for my own notes. The deck embedded at the bottom and the transcript linked.
+          - h: What the recording adds
+            body: |
+              When the transcript arrives for a note built from slides, nothing is overwritten. The skill reads it for what slides never carry - the professor's explanations, the case discussion, the questions and answers, what they said matters for the exam - and expands the notes with it. A last pass lists the handful of my own essays and readings that actually bear on the session.
+        plain: |
+          Deck plus recording becomes one long, linked, exam-ready note per session. I only ever write in the section reserved for me.
+
+      - tag: Stage 5 · The tasks
+        num: "05"
+        title: Assignments get scored and drafted before I open them
+        lede: |
+          Each assignment task is scored each morning (urgency, importance, time estimate, a do-date five days before the deadline) with a note of what was checked to get there. Then a first pass is written for every one with a live deadline, graded or not.
+        mechs:
+          - h: The first pass
+            body: |
+              A background agent reads the brief, the attachments and the lecture notes for that session and drafts an attempt matched to the type: a spreadsheet template filled in, a structured draft for a case or memo, suggested answers for an online form. It sits under the task when I open it.
+          - h: What stays mine
+            body: |
+              A background job sorts tasks by whether a machine can finish them. Vault-only work gets done and closed with a note saying so. Anything graded, anything that sends or submits, and anything ambiguous stays open for me, with the draft already there. For Wharton the readings are summarised too, and a 9pm job renders a page of what is due tomorrow.
+        plain: |
+          The homework arrives as to-dos with a score and a draft attached. Graded work is left open for me to finish, with the preparation done.
+
+  - type: vaultfit
+    eyebrow: Where one session ends up
+    title: One deck and one recording become five things
+    intro: |
+      What a single Tuesday class turns into by Wednesday morning, with no filing on my side.
+    source:
+      label: One class session
+      name: '"VC L04" · a deck off Canvas, a recording off my phone'
+      meta: Tuesday 8:30am, Huntsman Hall
+    fan:
+      - icon: 📎
+        where: Attachments
+        what: "**The deck PDF**, the audio and the raw transcript, kept for life."
+      - icon: 📄
+        where: Lecture note
+        what: "**`VC L04 - Title.md`**, concepts, summary, exam-ready notes, deck embedded, transcript linked."
+      - icon: ✅
+        where: To-do
+        what: "**Any assignment** for the session, scored, deadline in local time, first draft underneath."
+      - icon: 🗂
+        where: Course page
+        what: "**The course hub** lists every session's note, deck and transcript from their own metadata."
+    divider: "↓  and one more, at 9pm  ↓"
+    fan2:
+      - icon: 📱
+        where: Tonight's prep
+        what: "A page and a small phone app showing what is due tomorrow and which readings are already summarised."
+        color: green
+    foot: |
+      None of it is typed by me. The deck was downloaded by a script, the transcript arrived on its own, the note was written from both, and the rest is queries over the fields the note carries.
+
+  - type: oneline
+    text: |
+      Log in once, download on a schedule, record every class, and have the script write down what it downloaded. *Everything clever happens after that list.*
+    foot: Happy to walk through any of the scripts if you want one for Wharton.
+
+footer:
+  meta: INSEAD job since March 2026 · Penn job since 23 August 2026
+  tail: For Noa, August 2026.

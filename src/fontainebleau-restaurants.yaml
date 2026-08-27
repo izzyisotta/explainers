@@ -1,0 +1,160 @@
+template: brief
+title: Eating around Fontainebleau
+kicker: Dining guide
+subtitle: |
+  Every restaurant here is within roughly a 10 to 15 minute Uber of central
+  Fontainebleau: the town itself, Barbizon, and Bourron-Marlotte. Split into
+  the smart list and the casual list, because sometimes it's a celebration
+  and sometimes it's a Tuesday.
+audience: Compiled for Isabella, June 2026
+
+sections:
+  - type: bigidea
+    headline: |
+      You don't have to go to Paris. Within fifteen minutes of the château
+      there's a **Michelin-starred table, a gastronomic restaurant in château
+      stables, and the best village bistros in the forest.**
+    body: |
+      The anchor fact: chef Kunihisa Goto runs both the smartest room in town
+      (L'Axel) and one of the most fun casual ones (Fuumi), so the quality
+      ceiling here is genuinely high.
+
+  - type: stages
+    eyebrow: When it's an occasion
+    title: The smart list
+    cards:
+      - tag: Smart · Fontainebleau
+        num: "01"
+        turning: true
+        title: L'Axel
+        lede: |
+          The headline booking. **One Michelin star, held for years**, in the
+          heart of Fontainebleau. Chef Kunihisa Goto reworks classic French
+          gastronomy with Japanese ingredients: daikon, shiso, nori, Wagyu.
+        mechs:
+          - h: Why it's the pick
+            body: The most refined cooking in the area by some distance. Seasonal tasting menus, serious wine list, smart but low-key room.
+          - h: Practicalities
+            body: 43 rue de France, central Fontainebleau, so barely an Uber at all. Book well ahead, especially weekends.
+        plain: |
+          If you want one special-occasion dinner near campus, this is it.
+
+      - tag: Smart · Bourron-Marlotte
+        num: "02"
+        title: Les Prémices
+        lede: |
+          Gastronomic restaurant set in the **16th-century stables of the
+          Château de Bourron**, about 10 minutes south. Gault&Millau 16/20,
+          Michelin Guide listed. Light, herb-driven cooking and a flower-decked terrace.
+        mechs:
+          - h: Why it's the pick
+            body: The prettiest setting of the lot. Menus at €50 (market), €65, and a €90 carte blanche surprise menu.
+          - h: Practicalities
+            body: 12bis rue Blaise-de-Montesquiou, Bourron-Marlotte. Closed Sunday evening through Tuesday lunch, so it's a Wednesday-to-Sunday-lunch place.
+        plain: |
+          Best value-for-grandeur ratio: château setting at village prices.
+
+      - tag: Smart · Barbizon
+        num: "03"
+        title: Hôtellerie du Bas-Bréau
+        lede: |
+          The grand old inn of Barbizon (painters and Robert Louis Stevenson
+          stayed here). White-tablecloth classic French dining in a
+          **historic coaching inn with a beautiful garden**.
+        mechs:
+          - h: Why it's the pick
+            body: Old-school luxury rather than modern tasting-menu cooking. Around a 4.4 rating; the most atmospheric formal room in Barbizon.
+          - h: Practicalities
+            body: 22 Grande Rue, Barbizon, a couple of doors from Le Gaulois. Roughly 12 minutes by car.
+        plain: |
+          Take parents here. It's the "we're in a French village and doing it
+          properly" option.
+
+      - tag: Smart-ish · Fontainebleau
+        num: "04"
+        title: La Table du Parc
+        lede: |
+          Hotel restaurant right by the château park with a **lovely garden
+          terrace**. Fixed menus or à la carte, polished French cooking.
+        mechs:
+          - h: Why it's on the list
+            body: The setting next to the park is the draw, especially for a summer lunch outside.
+          - h: Honest caveat
+            body: Reviews are more mixed than the three above, with some grumbling on value. Go for the terrace on a nice day rather than the food alone.
+        plain: |
+          A good lunch-in-the-sun option, not the one to bet a big occasion on.
+
+  - type: stages
+    eyebrow: When it's a Tuesday
+    title: The casual list
+    cards:
+      - tag: Casual · Fontainebleau
+        num: "05"
+        turning: true
+        title: Fuumi
+        lede: |
+          The **casual sibling of L'Axel**, same chef. Teppanyaki counter where
+          gyoza, ramen and the house okonomiyaki are cooked in front of you.
+          Michelin Guide listed despite being relaxed and fun.
+        mechs:
+          - h: Why it's the pick
+            body: Starred-chef quality at bistro prices, and the counter seats are genuinely entertaining.
+          - h: Practicalities
+            body: Central Fontainebleau. Permanently packed; booking is close to mandatory.
+        plain: |
+          The best casual meal in town. Aim for the counter.
+
+      - tag: Casual · Fontainebleau
+        num: "06"
+        title: Le Bistrot 9
+        lede: |
+          A proper neighbourhood bistro that locals and visitors both rate:
+          **beef tartare, escargot, fish done well**, classic room.
+        mechs:
+          - h: Why it's the pick
+            body: Consistently one of the top-reviewed everyday restaurants in Fontainebleau. No theatre, just good cooking.
+          - h: Practicalities
+            body: Central Fontainebleau, walkable or a two-minute Uber.
+        plain: |
+          The reliable default when nobody can decide.
+
+      - tag: Casual · Barbizon
+        num: "07"
+        title: Le Relais de Barbizon
+        lede: |
+          Hearty traditional French cooking, often called **the best
+          old-fashioned table in the village**: excellent sole, and a
+          tarte tatin people travel for.
+        mechs:
+          - h: Why it's the pick
+            body: Around a 4.3 rating and the most "Sunday lunch in the countryside" feel on this list.
+          - h: Practicalities
+            body: 2 avenue du Général de Gaulle, Barbizon, about 12 minutes by car.
+        plain: |
+          The upgrade pick in Barbizon if you liked the village but want more
+          than a grill.
+
+      - tag: Casual · Barbizon
+        num: "08"
+        title: Le Gaulois sur le Grill
+        lede: |
+          Your known quantity (the one you remembered as "Le Groulois").
+          **Meat-on-the-open-grill bistro** on Barbizon's Grande Rue, terrace
+          out front, typically French in a good way.
+        mechs:
+          - h: Why it's on the list
+            body: You've been and liked it; it's the benchmark the rest of this list is calibrated against.
+          - h: Practicalities
+            body: 64bis Grande Rue, Barbizon. Walk it off in the forest afterwards.
+        plain: |
+          Already proven. Bring people who want grilled meat and no fuss.
+
+  - type: oneline
+    text: |
+      Book **L'Axel** for the occasion, **Les Prémices** for the setting,
+      **Fuumi** for the fun, and keep **Le Gaulois** for the Tuesdays.
+    foot: All within ~15 minutes of central Fontainebleau by car.
+
+footer:
+  meta: compiled 2026-06-12 · sources · Michelin Guide, Gault&Millau, Tripadvisor, restaurant sites
+  tail: Hours and closing days change seasonally; check before booking, especially Sunday and Monday.
